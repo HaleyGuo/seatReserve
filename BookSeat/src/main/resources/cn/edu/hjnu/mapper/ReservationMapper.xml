@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hjnu.mapper.ReservationMapper">
+    <select id="selectReservation" resultType="reservation" parameterType="int">
+        select * from reservations where studentID=#{studentID};
+    </select>
+    <select id="selectReservationInfo" resultType="ReservationInfo" parameterType="map">
+        SELECT
+        a.aid,
+        a.areaName,
+        s.seat_number,
+        s.is_available,
+        r.start_time,
+        r.end_time,
+        r.status
+        FROM
+        area a
+        JOIN
+        seats s ON a.aid = s.aid
+        LEFT JOIN
+        reservations r ON s.seat_id = r.seat_id AND r.status = 'reserved'
+        AND NOT (
+        r.end_time &lt;= #{start_time}
+        OR
+        r.start_time >= #{end_time}
+        )
+        WHERE
+        a.aid = #{aid}
+        ORDER BY
+        s.seat_number;
+    </select>
+    <insert id="AddReservation" parameterType="reservation">
+        insert into reservations (start_time, end_time,seat_id, studentID) values (#{start_time}, #{end_time}, #{seat_id}, #{studentID});
+    </insert>
+    <delete id="DeleteReservation" parameterType="int">
+        delete from reservations where studentID = #{studentID};
+    </delete>
+</mapper>

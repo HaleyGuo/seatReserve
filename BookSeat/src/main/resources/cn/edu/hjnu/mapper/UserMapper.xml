@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hjnu.mapper.UserMapper">
+    <select id="login" resultType="User" parameterType="int">
+        select * from user where studentID=#{studentID};
+    </select>
+    <select id="userInfo" resultType="User" parameterType="int">
+        select studentID,name,type,credit from user where studentID=#{studentID};
+    </select>
+    <select id="checkPassword" resultType="User" parameterType="int">
+        select * from user where studentID=#{studentID};
+    </select>
+    <update id="updatePassword" parameterType="map">
+        update user set password=#{newPassword} where studentID=#{studentID};
+    </update>
+</mapper>
