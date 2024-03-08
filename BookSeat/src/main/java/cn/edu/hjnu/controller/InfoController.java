@@ -13,6 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @Controller
+//获取所有区域和区域内的座位信息
 public class InfoController {
     @Autowired
     private InfoService infoService;

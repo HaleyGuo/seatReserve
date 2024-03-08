@@ -3,6 +3,7 @@ package cn.edu.hjnu.service.Impl;
 import cn.edu.hjnu.domain.User;
 import cn.edu.hjnu.mapper.UserMapper;
 import cn.edu.hjnu.service.UserService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,30 +12,45 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public String login(int studentID, String password) {
-        User user = userMapper.login(studentID);
+    public JSONObject login(String username, String password) {
+        User user = userMapper.login(username);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 200);
         if (user == null) {
-            return "用户登陆失败，请检查用户名和密码是否有误!";
+            jsonObject.put("msg","账号或密码错误!");
+            return jsonObject;
         }
         if (user.getPassword().equals(password)) {
-            return "登陆成功!";
+            jsonObject.put("msg","登录成功!");
+            return jsonObject;
         }
-        return "用户登陆失败，请检查用户名和密码是否有误!";
+        jsonObject.put("msg","账号或密码错误!");
+        return jsonObject;
     }
 
-    public User userInfo(int studentID) {
-        return userMapper.userInfo(studentID);
+    public User userInfo(String username) {
+        return userMapper.userInfo(username);
     }
 
-    public String updatePassword(int studentID, String oldPassword, String newPassword) {
-        User user = userMapper.checkPassword(studentID);
+    public JSONObject updatePassword(String username, String oldPassword, String newPassword) {
+        User user = userMapper.checkPassword(username);
+        JSONObject jsonObject = new JSONObject();
+        if (user == null) {
+            jsonObject.put("code", "404");
+            jsonObject.put("msg", "用户不存在!");
+            return jsonObject;
+        }
+        jsonObject.put("code","200");
         if (user.getPassword().equals(oldPassword)) {
-            if (userMapper.updatePassword(studentID, newPassword)){
-                return "更新成功!";
+            if (userMapper.updatePassword(username, newPassword)){
+                jsonObject.put("msg", "更新成功!");
+                return jsonObject;
             }
-            return "更新失败!";
+            jsonObject.put("msg", "更新失败!");
+            return jsonObject;
         } else {
-            return "密码错误!";
+            jsonObject.put("msg", "密码错误!");
+            return jsonObject;
         }
     }
 

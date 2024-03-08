@@ -2,7 +2,7 @@ package cn.edu.hjnu.domain;
 
 public class reservation {
     private int reservation_id;
-    private int studentID;
+    private String username;
     private int seat_id;
     private String start_time;
     private String end_time;
@@ -17,12 +17,12 @@ public class reservation {
         this.reservation_id = reservation_id;
     }
 
-    public int getStudentID() {
-        return studentID;
+    public String getUsername() {
+        return username;
     }
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getSeat_id() {

@@ -1,18 +1,27 @@
 package cn.edu.hjnu.domain;
 
 public class User {
-    private int studentID;
+    private String username;
     private String name;
+    private String gender;
     private String password;
     private int type;
     private String credit;
 
-    public int getStudentID() {
-        return studentID;
+    public String getUsername() {
+        return username;
     }
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getName() {

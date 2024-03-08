@@ -7,10 +7,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
     //判断登陆
-    public User login(int studentID);
+    public User login(String username);
     //查看个人信息
-    public User userInfo(int studentID);
+    public User userInfo(String username);
     //修改密码
-    public User checkPassword(int studentID);
-    public boolean updatePassword(@Param("studentID") int studentID,@Param("newPassword") String newPassword);
+    public User checkPassword(String username);
+    public boolean updatePassword(@Param("username") String username,@Param("newPassword") String newPassword);
 }

@@ -1,12 +1,13 @@
 package cn.edu.hjnu.service;
 
 import cn.edu.hjnu.domain.User;
+import com.alibaba.fastjson.JSONObject;
 
 public interface UserService {
     //判断登陆
-    public String login(int studentID, String password);
+    public JSONObject login(String username, String password);
     //查看个人信息
-    public User userInfo(int studentID);
+    public User userInfo(String username);
     //修改密码
-    public String updatePassword(int studentID, String oldPassword,String newPassword);
+    public JSONObject updatePassword(String username, String oldPassword,String newPassword);
 }
