@@ -39,8 +39,8 @@ public class ReservationController {
     //退约座位
     @GetMapping(value = "/DeleteReservation")
     @ResponseBody
-    public JSONObject DeleteReservation(String username){
-        return reservationService.DeleteReservation(username);
+    public JSONObject DeleteReservation(int reservation_id){
+        return reservationService.DeleteReservation(reservation_id);
     }
     //预约记录
     @GetMapping(value = "/ReservationLog")
@@ -51,7 +51,7 @@ public class ReservationController {
     //签到
     @GetMapping(value = "/SignIn")
     @ResponseBody
-    public JSONObject SignIn(String username){
-        return reservationService.SignIn(username);
+    public JSONObject SignIn(int reservation_id){
+        return reservationService.SignIn(reservation_id);
     }
 }

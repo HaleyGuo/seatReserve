@@ -10,9 +10,9 @@ import java.util.List;
 public interface ReservationService {
     public reservation selectReservation(String username);
     public List<ReservationInfo> selectReservationInfo(String start_time, String end_time, int aid);
-    public boolean CheckReservation(String username);
     public JSONObject AddReservation(reservation reservation);
-    public JSONObject DeleteReservation(String username);
+    public JSONObject DeleteReservation(int reservation_id);
     public List<reservation> SelectReservationLog(String username);
-    public JSONObject SignIn(String username);
+    public JSONObject SignIn(int reservation_id);
+    public boolean Late(int reservation_id);
 }

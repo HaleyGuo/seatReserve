@@ -10,4 +10,6 @@ public interface UserService {
     public User userInfo(String username);
     //修改密码
     public JSONObject updatePassword(String username, String oldPassword,String newPassword);
+    //迟到扣信誉分
+    public boolean SubCredit(String username);
 }

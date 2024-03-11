@@ -20,10 +20,21 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
     <!--  内部资源解析器  -->
-<!--    <bean id="res" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-<!--        <property name="prefix" value="/WEB-INF/pages/"/>-->
-<!--    </bean>-->
+    <!--    <bean id="res" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+    <!--        <property name="prefix" value="/WEB-INF/pages/"/>-->
+    <!--    </bean>-->
     <!--  开发静态资源访问权限  -->
     <mvc:default-servlet-handler/>
+
+    <!--    配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--    拦截所有的文件夹,不包含子文件夹        -->
+            <!--            <mvc:mapping path="/*"/>-->
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login"/>
+            <bean class="cn.edu.hjnu.interceptor.interceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

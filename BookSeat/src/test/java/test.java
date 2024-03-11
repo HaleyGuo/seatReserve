@@ -1,60 +1,40 @@
-/*
+import cn.edu.hjnu.task.Task;
+import org.quartz.*;
+import org.quartz.impl.StdScheduler;
+import org.quartz.impl.StdSchedulerFactory;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.concurrent.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
-class test {
+public class test{
+    public static void main(String[] args) throws SchedulerException {
+        //调度器
+        Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+        //触发器
+        LocalDateTime localDateTime = LocalDateTime.of(2024, 3, 9, 15, 15, 0);
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+        Date date = Date.from(zonedDateTime.toInstant());
 
-    public static void runTaskAtSpecificDateTime(LocalDateTime targetDateTime, Runnable task) {
-        // 创建ScheduledExecutorService实例
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        LocalDateTime localDateTime2 = LocalDateTime.of(2024, 3, 9, 15, 15, 20);
+        ZonedDateTime zonedDateTime2 = localDateTime2.atZone(ZoneId.systemDefault());
+        Date date2 = Date.from(zonedDateTime2.toInstant());
 
-        // 获取当前的日期和时间
-        LocalDateTime now = LocalDateTime.now();
-
-        // 计算现在和目标时间之间的时间差
-        long delay = ChronoUnit.MILLIS.between(now, targetDateTime);
-
-        // 如果目标时间在过去，可以选择直接执行任务或者抛出异常
-        if (delay < 0) {
-            System.out.println("The target time is in the past. Task not scheduled.");
-            // 这里可以选择执行 executorService.execute(task); 代替直接运行任务
-            executorService.shutdown();
-            return;
-        }
-
-        // 安排任务在指定延迟后执行
-        ScheduledFuture<?> future = executorService.schedule(task, delay, TimeUnit.MILLISECONDS);
-
-        // 当需要停止时关闭ScheduledExecutorService
-        // 通常在应用程序停止时调用 executorService.shutdown();
+        Trigger trigger = TriggerBuilder
+                .newTrigger()
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule())
+                .startAt(date)
+//                .startNow()
+                .endAt(date2)
+                .build();
+        //工作详情对象
+        JobDetail jobDetail = JobBuilder.newJob(job.class).build();
+        //注册任务和触发器
+        scheduler.scheduleJob(jobDetail, trigger);
+        //开启任务
+        scheduler.start();
+//        scheduler.deleteJob(jobDetail.getKey());
     }
-
-    public static void main(String[] args) {
-        String time = "2023-07-21 14:30:00";
-        // 创建一个日期时间格式器，与给定的时间字符串格式匹配
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        // 解析字符串到LocalDateTime对象
-        LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
-
-        // 提取年、月、日
-        int year = dateTime.getYear();
-        int month = dateTime.getMonthValue();
-        int dayOfMonth = dateTime.getDayOfMonth();
-        int hour = dateTime.getHour();
-        int minute = dateTime.getMinute();
-        int second = dateTime.getSecond();
-        // 设置目标日期和时间为2023年07月21日14时30分0秒
-        LocalDateTime targetDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minute, second);
-
-        // 创建一个任务
-        Runnable task = () -> {
-            System.out.println("Task executed at " + LocalDateTime.now());
-        };
-
-        // 在指定日期时间执行任务
-        runTaskAtSpecificDateTime(targetDateTime, task);
-    }
-}*/
+}

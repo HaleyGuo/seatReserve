@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.hjnu.mapper.ReservationMapper">
     <select id="selectReservation" resultType="reservation" parameterType="String">
-        select * from reservations where username=#{username};
+        select * from reservations where username=#{username} and status = 'signed' or status = 'reserved';
     </select>
     <select id="selectReservationInfo" resultType="ReservationInfo" parameterType="map">
         SELECT
@@ -32,18 +32,21 @@
     <insert id="AddReservation" parameterType="reservation">
         insert into reservations (start_time, end_time,seat_id, username) values (#{start_time}, #{end_time}, #{seat_id}, #{username});
     </insert>
-    <update id="DeleteReservation" parameterType="String">
-        update reservations set status = 'cancelled' where username = #{username} and status = 'reserved';
+    <update id="DeleteReservation" parameterType="int">
+        update reservations set status = 'cancelled' where reservation_id = #{reservation_id} and status = 'reserved';
     </update>
-    <select id="CheckReservation" resultType="reservation" parameterType="String">
+    <select id="CheckReservation" resultType="reservation" parameterType="int">
         select *
         from reservations
-        where username = #{username} and status = 'reserved';
+        where reservation_id = #{reservation_id} and status = 'reserved';
     </select>
     <select id="SelectReservationLog" resultType="reservation" parameterType="String">
         select * from reservations where username = #{username} and status = 'reserved' or status = 'signed' or status = 'completed';
     </select>
-    <update id="SignIn" parameterType="String">
-        update reservations set status = 'signed' where username = #{username} and status = 'reserved';
+    <update id="SignIn" parameterType="int">
+        update reservations set status = 'signed' where reservation_id = #{reservation_id} and status = 'reserved';
+    </update>
+    <update id="Late" parameterType="int">
+        update reservations set status = 'lated' where reservation_id = #{reservation_id} and status = 'reserved';
     </update>
 </mapper>

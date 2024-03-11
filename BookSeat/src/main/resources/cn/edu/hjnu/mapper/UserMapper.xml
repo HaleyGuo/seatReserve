@@ -13,4 +13,7 @@
     <update id="updatePassword" parameterType="map">
         update user set password=#{newPassword} where username=#{username};
     </update>
+    <update id="SubCredit" parameterType="String">
+        update user set credit=credit-5 where username=#{username};
+    </update>
 </mapper>

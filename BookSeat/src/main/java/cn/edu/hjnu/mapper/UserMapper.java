@@ -13,4 +13,6 @@ public interface UserMapper {
     //修改密码
     public User checkPassword(String username);
     public boolean updatePassword(@Param("username") String username,@Param("newPassword") String newPassword);
+    //迟到扣信誉分
+    public boolean SubCredit(String username);
 }

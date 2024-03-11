@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public boolean SubCredit(String username) {
+        return userMapper.SubCredit(username);
+    }
+
 }
