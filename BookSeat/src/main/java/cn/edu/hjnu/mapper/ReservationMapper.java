@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ReservationMapper {
     //查看预约信息
-    public reservation selectReservation(String username);
+    public reservation[] selectReservation(String username);
     //查看座位预约情况
     public List<ReservationInfo> selectReservationInfo(@Param("start_time") String start_time, @Param("end_time") String end_time, @Param("aid") int aid);
     //检查预约情况,只允许预约一个座位

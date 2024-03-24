@@ -24,7 +24,7 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private ReservationMapper reservationMapper;
-    public reservation selectReservation(String username) {
+    public reservation[] selectReservation(String username) {
         return reservationMapper.selectReservation(username);
     }
 

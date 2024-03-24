@@ -19,7 +19,7 @@ public class ReservationController {
     //查询个人预约信息
     @GetMapping(value = "/PersonReservation")
     @ResponseBody
-    public reservation PersonReservation(@RequestParam("username") String username){
+    public reservation[] PersonReservation(@RequestParam("username") String username){
         return reservationService.selectReservation(username);
     }
     //查询区域内的预约情况
